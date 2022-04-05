@@ -1,0 +1,36 @@
+* {
+    box-sizing: border-box;
+    user-select: none;
+}
+body{
+    margin: 0;
+}
+canvas{
+    display: block;
+    border: 1px solid lightslategray;
+    margin: auto;
+    margin-top: 70px;
+}
+#toolbar {
+    width: 100%;
+    padding: 10px;
+    position: absolute;
+    top: 0;
+    background-color: #2f2f2f;
+    overflow: auto;
+}
+
+#colorPicker, #sizePicker{
+    position: relative;
+    float: left;
+    margin: 0 10px;
+    color: white;
+}
+button{
+    float: right;
+    margin: 0 5px;
+}
+
+input , button{
+    cursor: pointer;
+}
