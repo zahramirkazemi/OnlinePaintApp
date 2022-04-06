@@ -4,31 +4,53 @@
 }
 body{
     margin: 0;
+    background-color: #181D26;
+    font-family: monospace;
+}
+
+p{
+    display: inline-block;
+}
+#size {
+    height: 8px;
+}
+.container {
+    margin: 22px 43px 0 43px;
 }
 canvas{
     display: block;
-    border: 1px solid lightslategray;
-    margin: auto;
-    margin-top: 70px;
+    border: 2px solid #3D5A80;
+    border-radius: 15px;
+    box-shadow: 2px 2px 9px #060606;
 }
 #toolbar {
-    width: 100%;
     padding: 10px;
-    position: absolute;
-    top: 0;
-    background-color: #2f2f2f;
-    overflow: auto;
+    border-radius: 12px;
+    height: 54px;
+    background-color: #3D5A80;
+    margin-bottom: 20px;
+    box-shadow: 2px 2px 9px #060606;
 }
 
-#colorPicker, #sizePicker{
+#colorPicker, #sizePicker,#bkcolorPicker{
     position: relative;
     float: left;
     margin: 0 10px;
-    color: white;
+    height: 34px;
+    color: #E0FBFC;
 }
 button{
     float: right;
     margin: 0 5px;
+    box-shadow: 1px 1px 4px #262728;
+    height: 34px;
+    border-radius: 6px;
+    border: none;
+    font-family: monospace;
+}
+
+input {
+    margin: 0 6px;
 }
 
 input , button{

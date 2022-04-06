@@ -1,65 +1,65 @@
-var canvas = document.getElementById('canvas');
-var brush = document.getElementById('brush');
-var eraser = document.getElementById('erase');
-var reset = document.getElementById('reset');
-var save = document.getElementById('saveLink');
-var brushColor = document.getElementById('color');
-var brushSize = document.getElementById('size');
+const brush = document.getElementById('brush');
+const eraser = document.getElementById('erase');
+const reset = document.getElementById('reset');
+const save = document.getElementById('saveLink');
+const brushColor = document.getElementById('color');
+const brushSize = document.getElementById('size');
+const radioBkNone = document.getElementById('Backnone');
+const radioBkColor = document.getElementById('hasBack');
+const backColor = document.getElementById('bkcolor');
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth - 90;
+canvas.height = window.innerHeight - 120;
 var mouse = false;
 var positionX, positionY;
-brush.style.border = "2px solid red";
-canvas.style.cursor = "pointer";
+
 canvas.addEventListener("mousedown", brushDown, false);
 canvas.addEventListener("mousemove", brushMove, false);
 canvas.addEventListener("mouseup", brushUp, false);
+save.addEventListener('click',saveClick);
+reset.addEventListener('click',resetClick);
+brush.addEventListener('click',brushClick);
+eraser.addEventListener('click',eraserClick);
+radioBkColor.addEventListener('click', hasBackgroundColor);
+radioBkNone.addEventListener('click', hasBackgroundColor);
+backColor.addEventListener('change',hasBackgroundColor)
 
-canvas.width = window.innerWidth - 50;
-canvas.height = window.innerHeight - 100;
+brushClick();
 
-var ctx = canvas.getContext("2d");
-ctx.lineJoin = "round";
-ctx.lineCap = "round";
-
-function brushClick(){
-    ctx.strokeStyle = brushColor.value;
-    ctx.lineWidth = brushSize.value;
-    brush.style.border = "2px solid red";
+brushClick = () => {
+    brush.style.border = "2px solid #ee6c4d";
     eraser.style.border = "none";
-    canvas.addEventListener("mousedown", brushDown, false);
-    canvas.addEventListener("mousemove", brushMove, false);
-    canvas.addEventListener("mouseup", brushUp, false);
+    mode = "pen";
 }
 
-function eraserClick(){
-    
-    ctx.strokeStyle = "white";
-    ctx.lineWidth = brushSize.value;
-    eraser.style.border = "2px solid red";
+eraserClick = () => {    
+    eraser.style.border = "2px solid #ee6c4d";
     brush.style.border = "none";
-    canvas.addEventListener("mousedown", brushDown, false);
-    canvas.addEventListener("mousemove", brushMove, false);
-    canvas.addEventListener("mouseup", brushUp, false);
+    mode = "eraser"
 }
 
-function saveClick(){
-    var data = canvas.toDataURL();
-    save.href = data;
-    save.download = "paintScreen.png"
-}
-
-function resetClick(){
-    window.location.reload();
-}
-
-function colorChange(){
+brushDown = e => {
+    mouse = true;
+    var coordinates = getCoordinates(canvas,e);
+    canvas.style.cursor = "pointer";
+    positionX = coordinates.x;
+    positionY = coordinates.y;    
     ctx.strokeStyle = brushColor.value;
-}
-
-function sizeChange(){    
     ctx.lineWidth = brushSize.value;
+    ctx.beginPath();
+    ctx.moveTo(positionX,positionY);
+    brushDraw(canvas,positionX,positionY)
 }
 
-function getCoordinates(canvas , e){
+brushMove = e => {
+    var coordinates = getCoordinates(canvas,e);
+    positionX = coordinates.x;
+    positionY = coordinates.y;
+    brushDraw(canvas, positionX, positionY);
+}
+
+getCoordinates = (canvas , e) => {
     var rect = canvas.getBoundingClientRect();
     return {
         x: e.clientX - rect.left,
@@ -67,40 +67,62 @@ function getCoordinates(canvas , e){
     }
 }
 
-function brushDraw(canvas, positionX, positionY){
-    if(mouse){        
+brushDraw = (canvas, positionX, positionY) => {
+    if(mouse){    
+        if(mode=="pen"){            
+            ctx.globalCompositeOperation="source-over";
+            ctx.strokeStyle = brushColor.value;
+        }
+        else{
+            if(document.querySelector('input[name="hasBackground"]:checked').value === 'true'){
+                ctx.globalCompositeOperation="source-over";
+                ctx.strokeStyle = backColor.value;
+            }
+            else{                
+                ctx.globalCompositeOperation="destination-out";
+            }
+        }
+        
+        ctx.lineWidth = brushSize.value;
+        ctx.lineJoin = "round";
+        ctx.lineCap = "round";
         ctx.lineTo(positionX,positionY);
-        ctx.stroke();
+        ctx.stroke();     
         canvas.style.cursor = "pointer";
     }
 }
 
-function brushDown(e){
-    mouse = true;
-    var coordinates =  getCoordinates(canvas,e);
-    canvas.style.cursor = "pointer";
-    positionX = coordinates.x;
-    positionY = coordinates.y;
-    ctx.beginPath();
-    ctx.moveTo(positionX,positionY);
-    ctx.lineTo(positionX,positionY);
-    ctx.stroke();
-}
-function brushMove(e){
-    var coordinates = getCoordinates(canvas,e);
-    positionX = coordinates.x;
-    positionY = coordinates.y;
-    brushDraw(canvas, positionX, positionY);
-}
-function brushUp(){
+brushUp = () => {
     mouse = false;    
     canvas.style.cursor = "default";
 }
 
-save.addEventListener('click',saveClick);
-reset.addEventListener('click',resetClick);
-brush.addEventListener('click',brushClick);
-eraser.addEventListener('click',eraserClick);
-brushColor.addEventListener('change', colorChange);
-brushSize.addEventListener('change', sizeChange);
+hasBackgroundColor = () => {
+    var hasBackColor = document.querySelector('input[name="hasBackground"]:checked');
+    if(hasBackColor.value == 'true'){
+        backColor.disabled = false;
+        ctx.fillStyle = backColor.value;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    else {
+        backColor.disabled = true;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+} 
+
+saveClick = () => {
+    save.href = canvas.toDataURL();
+    save.download = "paintScreen.png"
+}
+
+resetClick = () => {
+    if(document.querySelector('input[name="hasBackground"]:checked').value === 'true'){
+        ctx.fillStyle = backColor.value;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    else{
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }   
+}
+
 
