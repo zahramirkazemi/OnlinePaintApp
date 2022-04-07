@@ -27,19 +27,19 @@ backColor.addEventListener('change',hasBackgroundColor)
 
 brushClick();
 
-brushClick = () => {
+function brushClick() {
     brush.style.border = "2px solid #ee6c4d";
     eraser.style.border = "none";
     mode = "pen";
 }
 
-eraserClick = () => {    
+function eraserClick() {    
     eraser.style.border = "2px solid #ee6c4d";
     brush.style.border = "none";
     mode = "eraser"
 }
 
-brushDown = e => {
+function brushDown(e) {
     mouse = true;
     var coordinates = getCoordinates(canvas,e);
     canvas.style.cursor = "pointer";
@@ -52,14 +52,14 @@ brushDown = e => {
     brushDraw(canvas,positionX,positionY)
 }
 
-brushMove = e => {
+function brushMove(e) {
     var coordinates = getCoordinates(canvas,e);
     positionX = coordinates.x;
     positionY = coordinates.y;
     brushDraw(canvas, positionX, positionY);
 }
 
-getCoordinates = (canvas , e) => {
+function getCoordinates(canvas , e) {
     var rect = canvas.getBoundingClientRect();
     return {
         x: e.clientX - rect.left,
@@ -67,7 +67,7 @@ getCoordinates = (canvas , e) => {
     }
 }
 
-brushDraw = (canvas, positionX, positionY) => {
+function brushDraw(canvas, positionX, positionY) {
     if(mouse){    
         if(mode=="pen"){            
             ctx.globalCompositeOperation="source-over";
@@ -92,12 +92,12 @@ brushDraw = (canvas, positionX, positionY) => {
     }
 }
 
-brushUp = () => {
+function brushUp() {
     mouse = false;    
     canvas.style.cursor = "default";
 }
 
-hasBackgroundColor = () => {
+function hasBackgroundColor() {
     var hasBackColor = document.querySelector('input[name="hasBackground"]:checked');
     if(hasBackColor.value == 'true'){
         backColor.disabled = false;
@@ -110,12 +110,12 @@ hasBackgroundColor = () => {
     }
 } 
 
-saveClick = () => {
+function saveClick() {
     save.href = canvas.toDataURL();
     save.download = "paintScreen.png"
 }
 
-resetClick = () => {
+function resetClick() {
     if(document.querySelector('input[name="hasBackground"]:checked').value === 'true'){
         ctx.fillStyle = backColor.value;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
