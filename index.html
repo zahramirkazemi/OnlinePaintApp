@@ -19,15 +19,16 @@
             </div>            
             <div id="bkcolorPicker">
                 <p>Background Color: </p>                
-                <input type="radio" id="Backnone" name="hasBackground" value="false" checked="checked">transparent
-                <input type="radio" id="hasBack" name="hasBackground" value="true">color
+                <input type="radio" id="Backnone" name="hasBackground" value="false" checked="checked">Transparent
+                <input type="radio" id="hasBack" name="hasBackground" value="true">Color
                 <input name="bkcolor" id="bkcolor" type="color" value="#ffffff" disabled/>
             </div>
-            <button id="reset">Reset</button>
-            <a href="" id="saveLink"><button id="save">Save</button></a>        
-            <button id="brush"><i class="fa-solid fa-paintbrush"></i></button>
-            <button id="erase"><i class="fa-solid fa-eraser"></i></button>
-            <br/>
+            <div>
+                <button id="brush"><i class="fa-solid fa-paintbrush"></i></button>
+                <button id="erase"><i class="fa-solid fa-eraser"></i></button>
+                <a href="" id="saveLink"><button id="save">Save</button></a> 
+                <button id="reset">Reset</button>
+            </div>
         </div>
         <canvas id="canvas">your browser does not support canvas. please update your browser!</canvas>
     </div>
