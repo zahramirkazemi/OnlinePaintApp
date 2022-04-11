@@ -1,7 +1,7 @@
 $margin: 10px;
 $phone_font_size: 0.6rem;
 $phone_button_size: 1.5rem;
-$web_font_size: 0.95rem;
+$web_font_size: 0.9rem;
 $web_button_size: 2.4rem;
 $main_font: monospace;
 $main_color: #181D26;
@@ -45,7 +45,7 @@ body{
 canvas{
     margin: auto;
     border: 2px solid $second_color;
-    border-radius: 15px;
+    border-radius: 15px; 
     box-shadow: $box_shadow;
 }
 

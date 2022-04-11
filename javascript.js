@@ -90,7 +90,7 @@ function brushDraw(canvas, positionX, positionY) {
         ctx.lineJoin = "round";
         ctx.lineCap = "round";
         ctx.lineTo(positionX,positionY);
-        ctx.stroke();     
+        ctx.stroke();
         canvas.style.cursor = "pointer";
     }
 }
