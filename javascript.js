@@ -10,7 +10,7 @@ const backColor = document.getElementById('bkcolor');
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth - 27;
-canvas.height = window.innerHeight - 120;
+canvas.height = window.innerHeight - 220;
 var mouse = false;
 var positionX, positionY;
 
