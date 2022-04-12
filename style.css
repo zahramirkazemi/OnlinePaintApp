@@ -54,12 +54,8 @@ input, button {
 }
 
 @media only screen and (min-width: 1070px) {
-  body {
-    font-size: 0.95rem;
-  }
-
-  button {
-    font-size: 0.95rem;
+  body, button {
+    font-size: 0.9rem;
   }
 
   button, input[type=color] {

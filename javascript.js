@@ -26,7 +26,7 @@ brush.addEventListener('click',brushClick);
 eraser.addEventListener('click',eraserClick);
 radioBkColor.addEventListener('click', hasBackgroundColor);
 radioBkNone.addEventListener('click', hasBackgroundColor);
-backColor.addEventListener('change',hasBackgroundColor)
+backColor.addEventListener('change', hasBackgroundColor)
 
 brushClick();
 
