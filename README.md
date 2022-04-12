@@ -4,7 +4,4 @@
 &nbsp;
 ### and can use for signature due to transparent background!
 
-&nbsp;
-
-### you can see the result in https://zahramirkazemi.github.io/OnlinePaintApp/
 
