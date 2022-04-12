@@ -64,10 +64,19 @@ function brushMove(e) {
 
 function getCoordinates(canvas , e) {
     var rect = canvas.getBoundingClientRect();
-    return {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top
+    if(e.clientX){
+        return {
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top
+        }
     }
+    else{
+        return {
+            x: e.touches[0].clientX - rect.left,
+            y: e.touches[0].clientY - rect.top,
+        }
+    }
+
 }
 
 function brushDraw(canvas, positionX, positionY) {
@@ -104,6 +113,7 @@ function hasBackgroundColor() {
     var hasBackColor = document.querySelector('input[name="hasBackground"]:checked');
     if(hasBackColor.value == 'true'){
         backColor.disabled = false;
+        ctx.globalCompositeOperation="source-over";
         ctx.fillStyle = backColor.value;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
