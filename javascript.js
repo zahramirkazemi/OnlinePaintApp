@@ -10,7 +10,7 @@ const backColor = document.getElementById('bkcolor');
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth - 27;
-canvas.height = window.innerHeight - 150;
+canvas.height = window.innerHeight - 120;
 var mouse = false;
 var positionX, positionY;
 
@@ -26,7 +26,7 @@ brush.addEventListener('click',brushClick);
 eraser.addEventListener('click',eraserClick);
 radioBkColor.addEventListener('click', hasBackgroundColor);
 radioBkNone.addEventListener('click', hasBackgroundColor);
-backColor.addEventListener('change', hasBackgroundColor)
+backColor.addEventListener('change',hasBackgroundColor)
 
 brushClick();
 
@@ -64,10 +64,19 @@ function brushMove(e) {
 
 function getCoordinates(canvas , e) {
     var rect = canvas.getBoundingClientRect();
-    return {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top
+    if(e.clientX){
+        return {
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top
+        }
     }
+    else{
+        return {
+            x: e.touches[0].clientX - rect.left,
+            y: e.touches[0].clientY - rect.top,
+        }
+    }
+
 }
 
 function brushDraw(canvas, positionX, positionY) {
@@ -90,7 +99,7 @@ function brushDraw(canvas, positionX, positionY) {
         ctx.lineJoin = "round";
         ctx.lineCap = "round";
         ctx.lineTo(positionX,positionY);
-        ctx.stroke();
+        ctx.stroke();     
         canvas.style.cursor = "pointer";
     }
 }
@@ -104,6 +113,7 @@ function hasBackgroundColor() {
     var hasBackColor = document.querySelector('input[name="hasBackground"]:checked');
     if(hasBackColor.value == 'true'){
         backColor.disabled = false;
+        ctx.globalCompositeOperation="source-over";
         ctx.fillStyle = backColor.value;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
@@ -127,5 +137,7 @@ function resetClick() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }   
 }
+
+
 
 
